@@ -14,9 +14,9 @@ module RenderHaml
   # Rendering template class, to capture local binding
   class Template
     def initialize(template_name:, bind:, layout: 'layout')
-      @template_name = "views/#{template_name}.html.haml"
+      @template_name = "app/views/#{template_name}.html.haml"
       @bind = bind
-      @layout = "views/#{layout}.html.haml"
+      @layout = "app/views/#{layout}.html.haml"
     end
 
     def render
@@ -37,6 +37,8 @@ module RenderHaml
       erb_file(@template_name).result(@bind)
     end
 
+    # binding, the object, does not accept a block, but a method does
+    # so just wrap binding in a method so you can send it a block
     def get_binding
       binding
     end

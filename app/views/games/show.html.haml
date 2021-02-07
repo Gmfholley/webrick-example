@@ -1,0 +1,37 @@
+<h1>Playing Swing Girl</h1>
+
+<h2>Hi, <%= @game.player %>: <%= @game.game_status %></h2>
+<p>Guesses: <%= @game.guesses.length %> of <%= @game.max_guesses %></p>
+
+<div style="display:flex;">
+  <% @game.word.split("").each do |letter| %>
+    <button><%= @game.display_letter(letter) %></button>
+  <% end %>
+</div>
+
+
+<% if @game.game_finished? %>
+  <p>The word was: <%= @game.word %></p>
+<% else %>
+  <p><%= @game.hint if @game.show_hint? %></p>
+  <form method="POST" action="/games/<%= @game.id %>">
+    <label for="guess">
+      Guess a letter
+      <input name="guess" id="guess" maxlength="1" required />
+      <input type="submit"/>
+    </label>
+  </form>
+
+  <form method="POST" action="/games/<%= @game.id %>">
+    <label for="guess_word">
+      Guess the whole word
+      <input name="word" id="guess_word" maxlength="5" required />
+      <input type="submit"/>
+    </label>
+  </form>
+<% end %>
+
+<img src="/assets/swing-girl.svg" alt="swing-girl">
+
+<a href="/games/new">New Game</a>
+<a href="/">Home</a>
